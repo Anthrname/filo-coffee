@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Pemesanan Filo Coffee</title>
+  <!-- Google Fonts for premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-color: #08080a;
+      --card-bg: rgba(18, 18, 22, 0.7);
+      --border-color: rgba(255, 255, 255, 0.05);
+      --text-main: #f4f4f5;
+      --text-muted: #71717a;
+      --primary: #d97706; /* Coffee Amber */
+      --primary-hover: #b45309;
+      --accent-glow: rgba(217, 119, 6, 0.15);
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient glowing circles in background */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: 10%;
+      right: -10%;
+      width: 45vw;
+      height: 45vw;
+      background: radial-gradient(circle, rgba(217, 119, 6, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Header Section */
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .logo-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .logo-badge {
+      width: 2.75rem;
+      height: 2.75rem;
+      background: linear-gradient(135deg, var(--primary), #fbbf24);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #000;
+      box-shadow: 0 4px 20px rgba(217, 119, 6, 0.3);
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      background: linear-gradient(to right, #ffffff, #e4e4e7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: 1.2fr 1fr;
+      }
+    }
+
+    /* Section Cards styling */
+    .section-card {
+      background-color: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 1.5rem;
+      padding: 1.75rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 0.75rem;
+    }
+
+    /* Menu Cards */
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .menu-item {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 1rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all 0.3s ease;
+    }
+
+    .menu-item:hover {
+      border-color: rgba(217, 119, 6, 0.2);
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .menu-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .menu-name {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .menu-price {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .menu-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .menu-select {
+      background-color: #121216;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+      color: #fff;
+      padding: 0.4rem 0.5rem;
+      font-size: 0.8rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .menu-select:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-add {
+      background-color: var(--primary);
+      color: #000;
+      border: none;
+      border-radius: 0.75rem;
+      padding: 0.6rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-add:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Cart styling */
+    .cart-empty {
+      color: var(--text-muted);
+      text-align: center;
+      padding: 2rem 0;
+      font-size: 0.9rem;
+    }
+
+    .cart-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-height: 250px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      padding-right: 0.25rem;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.015);
+      border: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.9rem;
+      animation: slideIn 0.25s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cart-item-details {
+      flex: 1;
+      margin-right: 0.75rem;
+    }
+
+    .cart-item-title {
+      font-weight: 600;
+    }
+
+    .cart-item-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .cart-item-price {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-top: 0.15rem;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .qty-btn {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 0.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: #16161c;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .qty-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .qty-val {
+      font-weight: 700;
+      font-size: 0.85rem;
+      min-width: 1.25rem;
+      text-align: center;
+    }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      padding: 0.25rem;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.7;
+      transition: opacity 0.15s ease;
+    }
+
+    .btn-remove:hover {
+      opacity: 1;
+    }
+
+    /* Cart Total */
+    .cart-total-box {
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      padding-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .total-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .total-amount {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .form-control {
+      width: 100%;
+      background-color: #121216;
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      color: #fff;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    .radio-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .radio-btn {
+      position: relative;
+    }
+
+    .radio-btn input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 1px solid var(--border-color);
+      background-color: #121216;
+      color: var(--text-muted);
+      padding: 0.75rem;
+      border-radius: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .radio-btn input:checked + .radio-label {
+      border-color: var(--primary);
+      color: #fff;
+      background-color: rgba(217, 119, 6, 0.05);
+      box-shadow: inset 0 0 10px rgba(217, 119, 6, 0.05);
+    }
+
+    /* Menu Tabs Section */
+    .menu-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-btn {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 2rem;
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: #000;
+      box-shadow: 0 4px 10px rgba(217, 119, 6, 0.15);
+    }
+
+    /* QRIS Payment Section */
+    .qris-box {
+      background-color: rgba(255, 255, 255, 0.01);
+      border: 1px dashed rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .qris-image-container {
+      width: 240px;
+      height: 310px;
+      background-color: #fff;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .qris-image-container:hover {
+      transform: scale(1.05);
+    }
+
+    .qris-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 0;
+    }
+
+    .upload-container {
+      width: 100%;
+      position: relative;
+    }
+
+    .upload-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      background-color: #121216;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .upload-label:hover {
+      border-color: var(--primary);
+      background-color: rgba(255, 255, 255, 0.01);
+    }
+
+    .upload-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .upload-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .upload-input {
+      display: none;
+    }
+
+    /* Preview Bukti Upload */
+    .preview-box {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      background-color: rgba(16, 185, 129, 0.05);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      padding: 0.75rem;
+      border-radius: 0.75rem;
+      width: 100%;
+    }
+
+    .preview-icon {
+      font-size: 1.25rem;
+      color: var(--success);
+    }
+
+    .preview-info {
+      flex: 1;
+      font-size: 0.75rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .preview-name {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .preview-status {
+      color: var(--success);
+    }
+
+    .btn-cancel-upload {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .btn-cancel-upload:hover {
+      color: #ef4444;
+    }
+
+    /* Checkout Flow Guidelines */
+    .steps-checklist {
+      background-color: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .steps-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .step-item.checked {
+      color: var(--success);
+    }
+
+    .step-checkbox {
+      width: 0.85rem;
+      height: 0.85rem;
+      border-radius: 50%;
+      border: 1.5px solid var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 800;
+    }
+
+    .step-item.checked .step-checkbox {
+      background-color: var(--success);
+      border-color: var(--success);
+      color: #000;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      background: linear-gradient(135deg, #18181b, #09090b);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.2rem;
+      font-weight: 700;
+      font-size: 1rem;
+      width: 100%;
+      cursor: not-allowed;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn-submit.active {
+      background: linear-gradient(135deg, var(--primary), #fbbf24);
+      color: #000;
+      border-color: var(--primary);
+      cursor: pointer;
+      box-shadow: 0 4px 25px rgba(217, 119, 6, 0.25);
+    }
+
+    .btn-submit.active:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(217, 119, 6, 0.35);
+    }
+
+    .btn-submit.active:active {
+      transform: translateY(0);
+    }
+
+    /* Back to Home Button */
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-back:hover {
+      background-color: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      transform: translateX(-3px);
+    }
+
+    .btn-back svg {
+      width: 1rem;
+      height: 1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-back:hover svg {
+      transform: translateX(-2px);
+    }
+
+    /* Footer Credits */
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <a href="/" class="btn-back">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Kembali ke Beranda
+      </a>
+      <div class="logo-container">
+        <div class="logo-badge">F</div>
+        <h1>FILO COFFEE</h1>
+      </div>
+      <p class="subtitle">Kesederhanaan Dalam Rasa</p>
+    </header>
+
+    <div class="grid">
+      <!-- Kiri: Pilih Menu Kopi -->
+      <div>
+        <div class="section-card">
+          <h2><span>☕</span> Daftar Menu Kopi</h2>
+          
+          <!-- Category Tabs -->
+          <div class="menu-tabs">
+            <button class="tab-btn active" data-category="coffee" onclick="setCategory('coffee')">Coffee Classics</button>
+            <button class="tab-btn" data-category="signature" onclick="setCategory('signature')">Signatures</button>
+            <button class="tab-btn" data-category="manual" onclick="setCategory('manual')">Manual Brew</button>
+            <button class="tab-btn" data-category="non-coffee" onclick="setCategory('non-coffee')">Non-Coffee</button>
+          </div>
+          
+          <div class="menu-list" id="menu-container">
+            <!-- Render via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Kanan: Keranjang & Pembayaran -->
+      <div style="display: flex; flex-direction: column; gap: 2rem;">
+        <!-- Keranjang Belanja -->
+        <div class="section-card">
+          <h2><span>🛒</span> Keranjang Belanja</h2>
+          
+          <div id="cart-container">
+            <div class="cart-empty" id="cart-empty-msg">Keranjang belanja Anda masih kosong.</div>
+            <div class="cart-items" id="cart-items-list">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <div class="cart-total-box">
+            <span class="total-title">Total Pembayaran</span>
+            <span class="total-amount" id="cart-total">Rp 0</span>
+          </div>
+        </div>
+
+        <!-- Data Diri & Pembayaran -->
+        <div class="section-card">
+          <h2><span>💳</span> Checkout & QRIS</h2>
+          
+          <!-- Form Data Diri -->
+          <div class="form-group">
+            <label for="cust-name">Nama Lengkap</label>
+            <input type="text" id="cust-name" class="form-control" placeholder="Masukkan nama Anda..." autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <label for="cust-phone">Nomor WhatsApp</label>
+            <input type="tel" id="cust-phone" class="form-control" placeholder="Contoh: 082319692292" autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <label>Metode Pemesanan</label>
+            <div class="radio-group">
+              <div class="radio-btn">
+                <input type="radio" id="met-takeaway" name="order-method" value="Takeaway" checked>
+                <label for="met-takeaway" class="radio-label">🛍️ Takeaway</label>
+              </div>
+              <div class="radio-btn">
+                <input type="radio" id="met-delivery" name="order-method" value="Delivery">
+                <label for="met-delivery" class="radio-label">🚴 Delivery</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section QRIS -->
+          <div class="form-group">
+            <label>Scan & Bayar via QRIS</label>
+            <div class="qris-box">
+              <div class="qris-image-container">
+                <img src="images/qris.jpg" alt="QRIS Filo Coffee" class="qris-img">
+              </div>
+
+              <!-- Upload Drag Zone -->
+              <div class="upload-container" id="upload-zone">
+                <input type="file" id="qris-file" class="upload-input" accept="image/*">
+                <label for="qris-file" class="upload-label">
+                  <span style="font-size: 1.5rem;">📸</span>
+                  <span class="upload-title" id="upload-label-text">Upload Bukti Pembayaran QRIS</span>
+                  <span class="upload-subtitle">Format PNG/JPG/JPEG</span>
+                </label>
+              </div>
+
+              <!-- Bukti Upload Preview -->
+              <div class="preview-box" id="upload-preview">
+                <span class="preview-icon">✓</span>
+                <div class="preview-info">
+                  <div class="preview-name" id="file-name-display">bukti_transfer.jpg</div>
+                  <div class="preview-status">Selesai diunggah</div>
+                </div>
+                <button class="btn-cancel-upload" id="btn-remove-file">Hapus</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Checkout Steps Guidelines -->
+          <div class="steps-checklist">
+            <div class="steps-title">Kelayakan Pemesanan</div>
+            <div class="step-item" id="step-cart">
+              <span class="step-checkbox">✓</span>
+              <span>Keranjang belanja tidak kosong</span>
+            </div>
+            <div class="step-item" id="step-name">
+              <span class="step-checkbox">✓</span>
+              <span>Nama pelanggan sudah diisi</span>
+            </div>
+            <div class="step-item" id="step-phone">
+              <span class="step-checkbox">✓</span>
+              <span>Nomor WhatsApp valid</span>
+            </div>
+            <div class="step-item" id="step-proof">
+              <span class="step-checkbox">✓</span>
+              <span>Bukti transfer QRIS sudah diunggah</span>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button id="btn-submit" class="btn-submit" disabled>
+            Konfirmasi & Kirim ke WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Filo Coffee. Kesederhanaan Dalam Rasa. All Rights Reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // 1. Data Menu Kopi
+    // 1. Data Menu Kopi Lengkap
+    const MENU_DATABASE = [
+      // Coffee Classics
+      { id: 'c1', category: 'coffee', name: 'Espresso', price: 13000, desc: 'Rich and concentrated shot of espresso brewed from local beans.' },
+      { id: 'c2', category: 'coffee', name: 'Americano', price: 15000, desc: 'Double shot espresso with hot or iced water for a clean cup.' },
+      { id: 'c3', category: 'coffee', name: 'Cappuccino', price: 15000, desc: 'Balanced mix of espresso, steamed milk, and rich microfoam.' },
+      { id: 'c4', category: 'coffee', name: 'Latte', price: 15000, desc: 'Espresso with silky smooth steamed milk and a thin layer of foam.' },
+      { id: 'c5', category: 'coffee', name: 'Taro Coffee', price: 17000, desc: 'Unique sweet blend of earthy taro flavor and bold espresso.' },
+      { id: 'c6', category: 'coffee', name: 'Matcha Coffee', price: 17000, desc: 'Fusing premium matcha green tea with a shot of espresso.' },
+      { id: 'c7', category: 'coffee', name: 'Caramel Coffee', price: 17000, desc: 'Sweet caramel syrup blended with fresh espresso and milk.' },
+      { id: 'c8', category: 'coffee', name: 'Red Velvet Coffee', price: 17000, desc: 'Decadent red velvet flavor combined with espresso and milk.' },
+      
+      // Signatures
+      { id: 's1', category: 'signature', name: 'Filo Coffee 2.0', price: 15000, desc: 'Our signature sweet and creamy iced coffee recipe.', tag: 'Classic' },
+      { id: 's2', category: 'signature', name: 'Filo Coffee 3.0', price: 17000, desc: 'Next-level signature blend with richer coffee notes and sweetness.', tag: 'Best Seller' },
+      { id: 's3', category: 'signature', name: 'Blissberry Coffee', price: 15000, desc: 'Refreshing espresso mixed with sweet and tangy berry infusion.', tag: 'Special' },
+      { id: 's4', category: 'signature', name: 'Lemon Coffee', price: 15000, desc: 'Bold espresso combined with refreshing citrus lemon notes.' },
+      { id: 's5', category: 'signature', name: 'Lemon Party', price: 10000, desc: 'A fun, refreshing lemon-infused coffee mocktail drink.' },
+      { id: 's6', category: 'signature', name: 'Kopi Susu Pandan', price: 17000, desc: 'Creamy iced coffee infused with sweet and fragrant pandan syrup.', tag: 'Seasonal' },
+      { id: 's7', category: 'signature', name: 'Kopi Susu Banana', price: 17000, desc: 'Creamy iced coffee infused with sweet banana syrup.', tag: 'Seasonal' },
+      { id: 's8', category: 'signature', name: 'Kopi Susu Peanut', price: 17000, desc: 'Creamy iced coffee with a nutty, savory peanut syrup.', tag: 'Seasonal' },
+      { id: 's9', category: 'signature', name: 'Kopi Susu Pistachio', price: 17000, desc: 'Creamy iced coffee with premium, nutty pistachio notes.', tag: 'Seasonal' },
+
+      // Manual Brew
+      { id: 'm1', category: 'manual', name: 'V60', price: 15000, desc: 'Filter coffee using hand-selected single-origin beans, clean and floral notes.', tag: 'Specialty' },
+      { id: 'm2', category: 'manual', name: 'Tubruk', price: 13000, desc: 'Traditional Indonesian steep brew, bold, heavy body, and intense aroma.' },
+      { id: 'm3', category: 'manual', name: 'Japanese', price: 15000, desc: 'Drip coffee brewed directly over ice cubes for a bright, fruity profile.' },
+      { id: 'm4', category: 'manual', name: 'Vietnam Drip', price: 13000, desc: 'Traditional slow-dripped coffee over sweet condensed milk.' },
+
+      // Non-Coffee
+      { id: 'n1', category: 'non-coffee', name: 'Taro', price: 13000, desc: 'Sweet, creamy drink flavored with earthy taro root.' },
+      { id: 'n2', category: 'non-coffee', name: 'Leci', price: 13000, desc: 'Refreshing sweet tea or lychee-infused refreshing milk drink.' },
+      { id: 'n3', category: 'non-coffee', name: 'Milo', price: 13000, desc: 'Classic chocolate malt drink served hot or iced.' },
+      { id: 'n4', category: 'non-coffee', name: 'Matcha', price: 15000, desc: 'Rich Japanese stone-ground matcha green tea whisked with creamy milk.', tag: 'Must Try' },
+      { id: 'n5', category: 'non-coffee', name: 'Red Velvet', price: 13000, desc: 'Decadent red velvet cocoa infusion with velvet-smooth milk.' },
+      { id: 'n6', category: 'non-coffee', name: 'Soda Susu', price: 13000, desc: 'Fizzy carbonated soda mixed with sweet condensed milk.' },
+      { id: 'n7', category: 'non-coffee', name: 'Choco Hazelnut', price: 13000, desc: 'Rich premium cocoa blend paired with sweet, nutty hazelnut syrup.' },
+      { id: 'n8', category: 'non-coffee', name: 'Lemon Bir', price: 10000, desc: 'Refreshing non-alcoholic carbonated lemon drink.' },
+      { id: 'n9', category: 'non-coffee', name: 'Lemon Natural', price: 10000, desc: 'Pure, refreshing freshly squeezed lemon juice.' }
+    ];
+
+    // 2. State Keranjang
+    let cart = [];
+    let paymentFileUploaded = false;
+    let paymentFileName = "";
+    let activeCategory = 'coffee';
+
+    // 3. Elements Selector
+    const menuContainer = document.getElementById('menu-container');
+    const cartItemsList = document.getElementById('cart-items-list');
+    const cartEmptyMsg = document.getElementById('cart-empty-msg');
+    const cartTotalDisplay = document.getElementById('cart-total');
+    const inputCustName = document.getElementById('cust-name');
+    const inputCustPhone = document.getElementById('cust-phone');
+    const fileInput = document.getElementById('qris-file');
+    const uploadZone = document.getElementById('upload-zone');
+    const uploadPreview = document.getElementById('upload-preview');
+    const fileNameDisplay = document.getElementById('file-name-display');
+    const btnRemoveFile = document.getElementById('btn-remove-file');
+    const btnSubmit = document.getElementById('btn-submit');
+
+    // Steps checklists
+    const stepCart = document.getElementById('step-cart');
+    const stepName = document.getElementById('step-name');
+    const stepPhone = document.getElementById('step-phone');
+    const stepProof = document.getElementById('step-proof');
+
+    // 4. Render Menu Kopi (Filtered by Category)
+    function renderMenu() {
+      const filtered = MENU_DATABASE.filter(item => item.category === activeCategory);
+      menuContainer.innerHTML = filtered.map(item => `
+        <div class="menu-item">
+          <div class="menu-info">
+            <div>
+              <div class="menu-name">
+                ${item.name}
+                ${item.tag ? `<span style="font-size: 0.65rem; background: rgba(217,119,6,0.15); color: var(--primary); padding: 0.15rem 0.4rem; border-radius: 0.25rem; margin-left: 0.4rem; font-weight: 700; text-transform: uppercase;">${item.tag}</span>` : ''}
+              </div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">${item.desc}</div>
+            </div>
+            <div class="menu-price">${formatRupiah(item.price)}</div>
+          </div>
+          <div class="menu-options">
+            <select class="menu-select" id="opt-variant-${item.id}">
+              <option value="Ice">Dingin (Ice)</option>
+              <option value="Hot">Panas (Hot)</option>
+            </select>
+            <select class="menu-select" id="opt-sugar-${item.id}">
+              <option value="Normal Sugar">Normal Sugar</option>
+              <option value="Less Sugar">Less Sugar</option>
+              <option value="No Sugar">No Sugar</option>
+            </select>
+          </div>
+          <button class="btn-add" onclick="addToCart('${item.id}')">
+            <span>+</span> Tambah ke Keranjang
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // Toggle Category Tabs
+    window.setCategory = function(category) {
+      activeCategory = category;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.getAttribute('data-category') === category) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      renderMenu();
+    };
+
+    // Format Rupiah
+    function formatRupiah(number) {
+      return 'Rp ' + number.toLocaleString('id-ID');
+    }
+
+    // 5. Tambah ke Keranjang
+    window.addToCart = function(menuId) {
+      const menuItem = MENU_DATABASE.find(item => item.id === menuId);
+      if (!menuItem) return;
+
+      const variantSelect = document.getElementById(`opt-variant-${menuId}`);
+      const sugarSelect = document.getElementById(`opt-sugar-${menuId}`);
+      const variant = variantSelect.value;
+      const sugar = sugarSelect.value;
+      
+      const customNote = `${variant}, ${sugar}`;
+
+      // Check if item with exact same configurations exists
+      const existingItem = cart.find(item => item.id === menuId && item.notes === customNote);
+
+      if (existingItem) {
+        existingItem.qty += 1;
+      } else {
+        cart.push({
+          id: menuItem.id,
+          name: menuItem.name,
+          price: menuItem.price,
+          qty: 1,
+          notes: customNote
+        });
+      }
+
+      renderCart();
+      validateForm();
+    };
+
+    // 6. Render Keranjang
+    function renderCart() {
+      if (cart.length === 0) {
+        cartEmptyMsg.style.display = 'block';
+        cartItemsList.style.display = 'none';
+      } else {
+        cartEmptyMsg.style.display = 'none';
+        cartItemsList.style.display = 'flex';
+        
+        cartItemsList.innerHTML = cart.map((item, index) => `
+          <div class="cart-item">
+            <div class="cart-item-details">
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-meta">Catatan: ${item.notes}</div>
+              <div class="cart-item-price">${formatRupiah(item.price * item.qty)}</div>
+            </div>
+            <div class="cart-item-actions">
+              <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+              <span class="qty-val">${item.qty}</span>
+              <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+              <button class="btn-remove" onclick="removeItem(${index})" title="Hapus item">×</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Hitung Total
+      const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      cartTotalDisplay.textContent = formatRupiah(total);
+    }
+
+    // Update Quantity
+    window.updateQty = function(index, delta) {
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      renderCart();
+      validateForm();
+    };
+
+    // Remove Item
+    window.removeItem = function(index) {
+      cart.splice(index, 1);
+      renderCart();
+      validateForm();
+    };
+
+    // 7. Event Handler Input File (Upload Bukti)
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        paymentFileUploaded = true;
+        paymentFileName = file.name;
+        fileNameDisplay.textContent = file.name;
+        uploadZone.style.display = 'none';
+        uploadPreview.style.display = 'flex';
+      }
+      validateForm();
+    });
+
+    // Remove Uploaded File
+    btnRemoveFile.addEventListener('click', function() {
+      fileInput.value = '';
+      paymentFileUploaded = false;
+      paymentFileName = '';
+      uploadZone.style.display = 'block';
+      uploadPreview.style.display = 'none';
+      validateForm();
+    });
+
+    // 8. Validasi Kelayakan Checkout
+    function validateForm() {
+      const nameVal = inputCustName.value.trim();
+      const phoneVal = inputCustPhone.value.trim();
+      
+      const isCartValid = cart.length > 0;
+      const isNameValid = nameVal.length >= 2;
+      const isPhoneValid = phoneVal.length >= 8 && /^\+?[0-9\s-]{8,15}$/.test(phoneVal);
+      const isProofValid = paymentFileUploaded;
+
+      // Update checklists UI
+      updateChecklistItem(stepCart, isCartValid);
+      updateChecklistItem(stepName, isNameValid);
+      updateChecklistItem(stepPhone, isPhoneValid);
+      updateChecklistItem(stepProof, isProofValid);
+
+      // Toggle submit button
+      if (isCartValid && isNameValid && isPhoneValid && isProofValid) {
+        btnSubmit.classList.add('active');
+        btnSubmit.disabled = false;
+      } else {
+        btnSubmit.classList.remove('active');
+        btnSubmit.disabled = true;
+      }
+    }
+
+    function updateChecklistItem(element, isValid) {
+      if (isValid) {
+        element.classList.add('checked');
+      } else {
+        element.classList.remove('checked');
+      }
+    }
+
+    // Bind validation events
+    inputCustName.addEventListener('input', validateForm);
+    inputCustPhone.addEventListener('input', validateForm);
+
+    // 9. Submit Order & Format ke WhatsApp Link
+    btnSubmit.addEventListener('click', function() {
+      if (btnSubmit.disabled) return;
+
+      const nameVal = inputCustName.value.trim();
+      const phoneVal = inputCustPhone.value.trim();
+      const methodVal = document.querySelector('input[name="order-method"]:checked').value;
+      const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+      // Build text detail pesanan
+      const itemDetailsText = cart.map(item => `- ${item.qty}x ${item.name} (Catatan: ${item.notes})`).join('\n');
+
+      // Compose the exact text requested
+      const messageText = 
+`*PESANAN BARU - FILO COFFEE* ☕
+----------------------------------
+👤 *Detail Pelanggan:*
+- Nama: ${nameVal}
+- No. WA: ${phoneVal}
+- Metode: ${methodVal}
+
+🛒 *Detail Pesanan:*
+${itemDetailsText}
+
+💰 *Total Pembayaran:* ${formatRupiah(total)}
+----------------------------------
+*PENTING:* Mohon lampirkan/kirim screenshot bukti transfer QRIS Anda di chat ini sebagai konfirmasi akhir.`;
+
+      // Target Admin WhatsApp number
+      const adminWhatsApp = "6282319692292";
+
+      // Alert/notification guiding the customer
+      alert("Detail pesanan Anda telah disiapkan!\n\nDi halaman WhatsApp nanti, mohon kirimkan pesan chat ini beserta screenshot bukti transfer QRIS Anda secara manual.");
+
+      // Redirect to WhatsApp Link
+      const waUrl = `https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(messageText)}`;
+      window.open(waUrl, '_blank');
+    });
+
+    // 10. Initial Run
+    renderMenu();
+    renderCart();
+    validateForm();
+  </script>
+</body>
+</html>
