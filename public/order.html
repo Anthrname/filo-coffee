@@ -4,15 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistem Pemesanan Filo Coffee</title>
+  
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            espresso: '#1c1917',
+            charcoal: '#0c0a09',
+            amberGold: '#d97706',
+          }
+        }
+      }
+    }
+  </script>
+
   <!-- Google Fonts for premium typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
       --bg-color: #08080a;
-      --card-bg: rgba(18, 18, 22, 0.7);
+      --card-bg: rgba(18, 18, 22, 0.75);
       --border-color: rgba(255, 255, 255, 0.05);
       --text-main: #f4f4f5;
       --text-muted: #71717a;
@@ -36,7 +56,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem;
+      padding: 0 1rem 2rem 1rem;
       overflow-x: hidden;
       position: relative;
     }
@@ -72,51 +92,6 @@
       z-index: 10;
     }
 
-    /* Header Section */
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .logo-container {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .logo-badge {
-      width: 2.75rem;
-      height: 2.75rem;
-      background: linear-gradient(135deg, var(--primary), #fbbf24);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #000;
-      box-shadow: 0 4px 20px rgba(217, 119, 6, 0.3);
-    }
-
-    h1 {
-      font-size: 2.25rem;
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      background: linear-gradient(to right, #ffffff, #e4e4e7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 0.25rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-
     /* Grid Layout */
     .grid {
       display: grid;
@@ -126,7 +101,7 @@
 
     @media (min-width: 768px) {
       .grid {
-        grid-template-columns: 1.2fr 1fr;
+        grid-template-columns: 1.25fr 1fr;
       }
     }
 
@@ -138,7 +113,7 @@
       border: 1px solid var(--border-color);
       border-radius: 1.5rem;
       padding: 1.75rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
 
     h2 {
@@ -147,9 +122,10 @@
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       padding-bottom: 0.75rem;
+      color: #fff;
     }
 
     /* Menu Cards */
@@ -171,7 +147,7 @@
     }
 
     .menu-item:hover {
-      border-color: rgba(217, 119, 6, 0.2);
+      border-color: rgba(217, 119, 6, 0.25);
       background-color: rgba(255, 255, 255, 0.03);
     }
 
@@ -235,18 +211,11 @@
     }
 
     /* Cart styling */
-    .cart-empty {
-      color: var(--text-muted);
-      text-align: center;
-      padding: 2rem 0;
-      font-size: 0.9rem;
-    }
-
     .cart-items {
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
-      max-height: 250px;
+      max-height: 280px;
       overflow-y: auto;
       margin-bottom: 1rem;
       padding-right: 0.25rem;
@@ -343,98 +312,6 @@
       opacity: 1;
     }
 
-    /* Cart Total */
-    .cart-total-box {
-      border-top: 1px dashed rgba(255, 255, 255, 0.08);
-      padding-top: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .total-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    .total-amount {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    /* Forms */
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-
-    .form-control {
-      width: 100%;
-      background-color: #121216;
-      border: 1px solid var(--border-color);
-      border-radius: 0.75rem;
-      color: #fff;
-      padding: 0.75rem 1rem;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.2s ease;
-    }
-
-    .form-control:focus {
-      border-color: var(--primary);
-    }
-
-    .radio-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-    }
-
-    .radio-btn {
-      position: relative;
-    }
-
-    .radio-btn input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-    }
-
-    .radio-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      border: 1px solid var(--border-color);
-      background-color: #121216;
-      color: var(--text-muted);
-      padding: 0.75rem;
-      border-radius: 0.75rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .radio-btn input:checked + .radio-label {
-      border-color: var(--primary);
-      color: #fff;
-      background-color: rgba(217, 119, 6, 0.05);
-      box-shadow: inset 0 0 10px rgba(217, 119, 6, 0.05);
-    }
-
     /* Menu Tabs Section */
     .menu-tabs {
       display: flex;
@@ -469,129 +346,6 @@
       box-shadow: 0 4px 10px rgba(217, 119, 6, 0.15);
     }
 
-    /* QRIS Payment Section */
-    .qris-box {
-      background-color: rgba(255, 255, 255, 0.01);
-      border: 1px dashed rgba(255, 255, 255, 0.08);
-      border-radius: 1rem;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.25rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .qris-image-container {
-      width: 240px;
-      height: 310px;
-      background-color: #fff;
-      border-radius: 0.75rem;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      position: relative;
-      transition: transform 0.3s ease;
-    }
-
-    .qris-image-container:hover {
-      transform: scale(1.05);
-    }
-
-    .qris-img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      padding: 0;
-    }
-
-    .upload-container {
-      width: 100%;
-      position: relative;
-    }
-
-    .upload-label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      border: 1px dashed rgba(255, 255, 255, 0.15);
-      background-color: #121216;
-      padding: 1rem;
-      border-radius: 0.75rem;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s ease;
-    }
-
-    .upload-label:hover {
-      border-color: var(--primary);
-      background-color: rgba(255, 255, 255, 0.01);
-    }
-
-    .upload-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .upload-subtitle {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .upload-input {
-      display: none;
-    }
-
-    /* Preview Bukti Upload */
-    .preview-box {
-      display: none;
-      align-items: center;
-      gap: 0.75rem;
-      background-color: rgba(16, 185, 129, 0.05);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      padding: 0.75rem;
-      border-radius: 0.75rem;
-      width: 100%;
-    }
-
-    .preview-icon {
-      font-size: 1.25rem;
-      color: var(--success);
-    }
-
-    .preview-info {
-      flex: 1;
-      font-size: 0.75rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .preview-name {
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .preview-status {
-      color: var(--success);
-    }
-
-    .btn-cancel-upload {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    .btn-cancel-upload:hover {
-      color: #ef4444;
-    }
-
     /* Checkout Flow Guidelines */
     .steps-checklist {
       background-color: rgba(255, 255, 255, 0.01);
@@ -617,6 +371,7 @@
       font-size: 0.8rem;
       color: var(--text-muted);
       margin-bottom: 0.35rem;
+      transition: color 0.25s ease;
     }
 
     .step-item.checked {
@@ -633,78 +388,13 @@
       justify-content: center;
       font-size: 0.55rem;
       font-weight: 800;
+      transition: all 0.25s ease;
     }
 
     .step-item.checked .step-checkbox {
       background-color: var(--success);
       border-color: var(--success);
       color: #000;
-    }
-
-    /* Submit Button */
-    .btn-submit {
-      background: linear-gradient(135deg, #18181b, #09090b);
-      color: var(--text-muted);
-      border: 1px solid var(--border-color);
-      border-radius: 1rem;
-      padding: 1.2rem;
-      font-weight: 700;
-      font-size: 1rem;
-      width: 100%;
-      cursor: not-allowed;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-
-    .btn-submit.active {
-      background: linear-gradient(135deg, var(--primary), #fbbf24);
-      color: #000;
-      border-color: var(--primary);
-      cursor: pointer;
-      box-shadow: 0 4px 25px rgba(217, 119, 6, 0.25);
-    }
-
-    .btn-submit.active:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 30px rgba(217, 119, 6, 0.35);
-    }
-
-    .btn-submit.active:active {
-      transform: translateY(0);
-    }
-
-    /* Back to Home Button */
-    .btn-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1.25rem;
-      background-color: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 2rem;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.25s ease;
-      margin-bottom: 1.5rem;
-    }
-
-    .btn-back:hover {
-      background-color: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.15);
-      color: #fff;
-      transform: translateX(-3px);
-    }
-
-    .btn-back svg {
-      width: 1rem;
-      height: 1rem;
-      transition: transform 0.2s ease;
-    }
-
-    .btn-back:hover svg {
-      transform: translateX(-2px);
     }
 
     /* Footer Credits */
@@ -719,25 +409,45 @@
 <body>
 
   <div class="container">
-    <header>
-      <a href="/" class="btn-back">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        Kembali ke Beranda
-      </a>
-      <div class="logo-container">
-        <div class="logo-badge">F</div>
-        <h1>FILO COFFEE</h1>
+    
+    <!-- Sticky Glassmorphic Header -->
+    <header class="sticky top-0 z-50 bg-[#08080a]/90 backdrop-blur-md border-b border-white/5 py-4 mb-8 flex justify-between items-center transition-all duration-300">
+      <div class="flex items-center gap-3">
+        <!-- Back Button -->
+        <a href="/" class="flex items-center gap-1.5 py-1 px-3 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/15 rounded-full text-zinc-400 hover:text-white text-xs font-semibold transition duration-200 decoration-none" title="Kembali ke Beranda">
+          <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">Beranda</span>
+        </a>
+        
+        <!-- Logo & Store Status Info -->
+        <div class="flex items-center gap-2.5 ml-1">
+          <div class="w-9 h-9 bg-gradient-to-br from-[#d97706] to-amber-500 rounded-full flex items-center justify-center font-black text-black shadow-md shadow-[#d97706]/20 text-sm">F</div>
+          <div>
+            <h1 class="text-base sm:text-lg font-bold tracking-wider text-white leading-tight font-['Outfit']">FILO COFFEE</h1>
+            <div class="flex items-center gap-1.5">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span class="text-[9px] sm:text-[10px] font-medium text-emerald-400 uppercase tracking-wider">Open • Specialized Espresso Bar</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <p class="subtitle">Kesederhanaan Dalam Rasa</p>
+      
+      <!-- Shopping Cart Shortcut Button with Badge -->
+      <div>
+        <a href="#cart-section" class="relative p-2.5 bg-[#1c1917] border border-white/5 rounded-full hover:border-[#d97706]/40 transition duration-300 text-zinc-400 hover:text-[#d97706] flex items-center justify-center" title="Keranjang Belanja">
+          <i class="fa-solid fa-cart-shopping text-sm sm:text-base"></i>
+          <span id="header-cart-badge" class="absolute -top-1 -right-1 bg-[#d97706] text-[#0c0a09] text-[9px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center border border-[#0c0a09] transform transition-transform duration-300 scale-0">0</span>
+        </a>
+      </div>
     </header>
 
     <div class="grid">
-      <!-- Kiri: Pilih Menu Kopi -->
+      <!-- Kiri: Pilih Menu Kopi (UI/UX Terjaga Asli) -->
       <div>
         <div class="section-card">
-          <h2><span>☕</span> Daftar Menu Kopi</h2>
+          <h2><i class="fa-solid fa-mug-hot text-amber-500 mr-0.5"></i> Daftar Menu Kopi</h2>
           
           <!-- Category Tabs -->
           <div class="menu-tabs">
@@ -748,112 +458,175 @@
           </div>
           
           <div class="menu-list" id="menu-container">
-            <!-- Render via JS -->
+            <!-- Rendered via JS -->
           </div>
         </div>
       </div>
 
-      <!-- Kanan: Keranjang & Pembayaran -->
+      <!-- Kanan: Keranjang & Pembayaran (Sistem Pemesanan Dirombak Premium 10x Lebih Baik) -->
       <div style="display: flex; flex-direction: column; gap: 2rem;">
-        <!-- Keranjang Belanja -->
-        <div class="section-card">
-          <h2><span>🛒</span> Keranjang Belanja</h2>
+        
+        <!-- Keranjang Belanja Premium -->
+        <div class="section-card" id="cart-section">
+          <h2><i class="fa-solid fa-cart-shopping text-amber-500"></i> Keranjang Belanja</h2>
           
           <div id="cart-container">
-            <div class="cart-empty" id="cart-empty-msg">Keranjang belanja Anda masih kosong.</div>
-            <div class="cart-items" id="cart-items-list">
+            <!-- Empty State dengan Ilustrasi Boks Terbuka -->
+            <div id="cart-empty-msg" class="flex flex-col items-center justify-center py-10 text-center">
+              <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-3">
+                <i class="fa-solid fa-box-open text-2xl text-zinc-500"></i>
+              </div>
+              <p class="text-xs font-semibold text-zinc-400">Keranjang Belanja Kosong</p>
+              <p class="text-[11px] text-zinc-600 mt-1 max-w-[200px]">Silakan pilih kustomisasi menu kopi Anda di sebelah kiri lalu tambahkan.</p>
+            </div>
+            
+            <div class="cart-items" id="cart-items-list" style="display: none;">
               <!-- Rendered dynamically -->
             </div>
           </div>
 
-          <div class="cart-total-box">
-            <span class="total-title">Total Pembayaran</span>
-            <span class="total-amount" id="cart-total">Rp 0</span>
+          <!-- Total & Breakdown Rinci -->
+          <div class="space-y-2.5 border-t border-white/5 pt-4 mt-4">
+            <div class="flex justify-between items-center text-xs text-zinc-400">
+              <span>Subtotal</span>
+              <span id="cart-subtotal" class="font-medium text-white">Rp 0</span>
+            </div>
+            
+            <!-- Delivery Fee Row (Tampil jika Delivery) -->
+            <div id="delivery-fee-row" class="hidden flex justify-between items-center text-xs text-zinc-400">
+              <span>Ongkos Kirim</span>
+              <span class="font-bold text-[#d97706] text-[9px] tracking-wider uppercase bg-[#d97706]/10 px-2 py-0.5 rounded border border-[#d97706]/20">FREE DELIVERY</span>
+            </div>
+            
+            <div class="flex justify-between items-center border-t border-white/5 pt-3 mt-3">
+              <span class="text-sm font-semibold text-zinc-300">Total Pembayaran</span>
+              <span id="cart-total" class="text-lg font-extrabold text-white">Rp 0</span>
+            </div>
           </div>
         </div>
 
-        <!-- Data Diri & Pembayaran -->
+        <!-- Checkout & Data Diri Dinamis -->
         <div class="section-card">
-          <h2><span>💳</span> Checkout & QRIS</h2>
+          <h2><i class="fa-solid fa-credit-card text-amber-500"></i> Checkout & Pembayaran</h2>
           
-          <!-- Form Data Diri -->
-          <div class="form-group">
-            <label for="cust-name">Nama Lengkap</label>
-            <input type="text" id="cust-name" class="form-control" placeholder="Masukkan nama Anda..." autocomplete="off">
+          <!-- Input Nama Lengkap -->
+          <div class="form-group mb-4">
+            <label for="cust-name" class="block text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-2">Nama Lengkap</label>
+            <input type="text" id="cust-name" class="w-full bg-[#121216] border border-white/5 focus:border-[#d97706] rounded-xl text-white px-4 py-3 text-sm outline-none transition focus:ring-1 focus:ring-[#d97706]" placeholder="Tulis nama lengkap Anda..." autocomplete="off">
           </div>
 
-          <div class="form-group">
-            <label for="cust-phone">Nomor WhatsApp</label>
-            <input type="tel" id="cust-phone" class="form-control" placeholder="Contoh: 082319692292" autocomplete="off">
+          <!-- Nomor WhatsApp WA -->
+          <div class="form-group mb-4">
+            <label for="cust-phone" class="block text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-2">Nomor WhatsApp</label>
+            <input type="tel" id="cust-phone" class="w-full bg-[#121216] border border-white/5 focus:border-[#d97706] rounded-xl text-white px-4 py-3 text-sm outline-none transition focus:ring-1 focus:ring-[#d97706]" placeholder="Contoh: 082319692292" autocomplete="off">
           </div>
 
-          <div class="form-group">
-            <label>Metode Pemesanan</label>
-            <div class="radio-group">
-              <div class="radio-btn">
-                <input type="radio" id="met-takeaway" name="order-method" value="Takeaway" checked>
-                <label for="met-takeaway" class="radio-label">🛍️ Takeaway</label>
-              </div>
-              <div class="radio-btn">
-                <input type="radio" id="met-delivery" name="order-method" value="Delivery">
-                <label for="met-delivery" class="radio-label">🚴 Delivery</label>
-              </div>
+          <!-- Pilihan Metode Pengambilan (Toggle Slider) -->
+          <div class="form-group mb-4">
+            <label class="block text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-2">Metode Pemesanan</label>
+            <div class="relative flex p-1 bg-[#121216] border border-white/5 rounded-xl">
+              <!-- Sliding background block -->
+              <div id="method-slider" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-[#d97706]/10 border border-[#d97706]/20 rounded-lg transition-all duration-300 ease-out"></div>
+              
+              <button type="button" id="btn-method-takeaway" class="relative z-10 w-1/2 py-2.5 text-center text-xs font-bold rounded-lg text-white transition-colors duration-200 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-bag-shopping"></i> Takeaway
+              </button>
+              <button type="button" id="btn-method-delivery" class="relative z-10 w-1/2 py-2.5 text-center text-xs font-bold rounded-lg text-zinc-500 transition-colors duration-200 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-truck-fast"></i> Delivery
+              </button>
+            </div>
+            <input type="hidden" id="order-method" value="Takeaway">
+          </div>
+
+          <!-- Input Alamat Rumah (Hanya muncul jika Delivery dengan animasi halus) -->
+          <div id="address-container" class="max-h-0 opacity-0 overflow-hidden transition-all duration-300 ease-out">
+            <div class="pb-4">
+              <label for="cust-address" class="block text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-2">Alamat Rumah Lengkap</label>
+              <textarea id="cust-address" rows="3" class="w-full bg-[#121216] border border-white/5 focus:border-[#d97706] rounded-xl text-white p-3 text-sm outline-none transition focus:ring-1 focus:ring-[#d97706] resize-none" placeholder="Tuliskan nama jalan, RT/RW, kelurahan/kecamatan, nomor rumah, dan patokan..."></textarea>
             </div>
           </div>
 
-          <!-- Section QRIS -->
-          <div class="form-group">
-            <label>Scan & Bayar via QRIS</label>
-            <div class="qris-box">
-              <div class="qris-image-container">
-                <img src="images/qris.jpg" alt="QRIS Filo Coffee" class="qris-img">
+          <!-- Section Pembayaran QRIS Premium -->
+          <div class="form-group mb-6">
+            <label class="block text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-2">Scan & Bayar via QRIS</label>
+            <div class="bg-white/[0.015] border border-white/5 rounded-2xl p-4 flex flex-col items-center gap-4">
+              
+              <!-- QRIS Image Container -->
+              <div class="w-48 h-48 bg-white p-2 rounded-xl flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-105">
+                <img id="qris-img" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=0c0a09&bgcolor=ffffff&data=00020101021226300016COM.CO.FILOCOFFEE01189360052001111111115204000053033605405100005802ID5911Filo Coffee6009Tangerang62070703A016304A3A2" alt="QRIS Filo Coffee" class="w-full h-full object-contain">
               </div>
 
-              <!-- Upload Drag Zone -->
-              <div class="upload-container" id="upload-zone">
-                <input type="file" id="qris-file" class="upload-input" accept="image/*">
-                <label for="qris-file" class="upload-label">
-                  <span style="font-size: 1.5rem;">📸</span>
-                  <span class="upload-title" id="upload-label-text">Upload Bukti Pembayaran QRIS</span>
-                  <span class="upload-subtitle">Format PNG/JPG/JPEG</span>
-                </label>
-              </div>
-
-              <!-- Bukti Upload Preview -->
-              <div class="preview-box" id="upload-preview">
-                <span class="preview-icon">✓</span>
-                <div class="preview-info">
-                  <div class="preview-name" id="file-name-display">bukti_transfer.jpg</div>
-                  <div class="preview-status">Selesai diunggah</div>
+              <!-- Salin Nominal Widget -->
+              <div class="w-full flex flex-col items-center gap-1 bg-[#121216] border border-white/5 rounded-xl py-2 px-3">
+                <span class="text-[9px] text-zinc-500 uppercase tracking-wider font-semibold">Nominal Pembayaran</span>
+                <div class="flex items-center gap-2">
+                  <span id="payment-amount" class="text-base font-extrabold text-white">Rp 0</span>
+                  <button type="button" id="btn-copy-amount" class="flex items-center gap-1.5 py-1 px-2.5 bg-[#d97706]/10 hover:bg-[#d97706]/20 text-[#d97706] hover:text-[#f59e0b] border border-[#d97706]/20 rounded-lg text-[10px] font-bold transition active:scale-95">
+                    <i class="fa-regular fa-copy"></i> <span id="copy-text">Salin</span>
+                  </button>
                 </div>
-                <button class="btn-cancel-upload" id="btn-remove-file">Hapus</button>
               </div>
+
+              <!-- Upload Bukti Pembayaran Kustom -->
+              <div class="w-full">
+                <!-- Dropzone Area -->
+                <div class="upload-container w-full" id="upload-zone">
+                  <input type="file" id="qris-file" class="hidden" accept="image/*">
+                  <label for="qris-file" class="flex flex-col items-center gap-2 border border-dashed border-white/15 bg-[#121216] hover:bg-white/5 py-4 px-4 rounded-xl cursor-pointer text-center transition duration-200">
+                    <i class="fa-solid fa-cloud-arrow-up text-xl text-zinc-400"></i>
+                    <div>
+                      <span class="block text-xs font-semibold text-zinc-300">Upload Bukti Pembayaran QRIS</span>
+                      <span class="block text-[10px] text-zinc-500 mt-0.5">Format file: PNG, JPG, JPEG</span>
+                    </div>
+                  </label>
+                </div>
+
+                <!-- Preview Bukti dengan Thumbnail Mini (Tersembunyi jika kosong) -->
+                <div class="preview-box hidden items-center gap-3 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl w-full" id="upload-preview">
+                  <img id="preview-thumbnail" src="" class="w-11 h-11 object-cover rounded-lg border border-emerald-500/30" alt="Preview Bukti">
+                  <div class="flex-1 min-w-0">
+                    <div class="text-xs font-semibold text-white truncate" id="file-name-display">bukti_transfer.jpg</div>
+                    <div class="text-[10px] text-emerald-400 flex items-center gap-1 font-semibold mt-0.5">
+                      <i class="fa-solid fa-circle-check text-xs"></i> Siap Dikirim
+                    </div>
+                  </div>
+                  <button type="button" class="text-zinc-400 hover:text-red-500 p-2 hover:bg-white/5 rounded-lg transition" id="btn-remove-file" title="Hapus File">
+                    <i class="fa-solid fa-trash-can text-sm"></i>
+                  </button>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- Checkout Steps Guidelines -->
+          <!-- Checkout Steps Guidelines (Checklist Kelayakan) -->
           <div class="steps-checklist">
             <div class="steps-title">Kelayakan Pemesanan</div>
             <div class="step-item" id="step-cart">
-              <span class="step-checkbox">✓</span>
+              <span class="step-checkbox"><i class="fa-solid fa-check text-[7px] text-black"></i></span>
               <span>Keranjang belanja tidak kosong</span>
             </div>
             <div class="step-item" id="step-name">
-              <span class="step-checkbox">✓</span>
-              <span>Nama pelanggan sudah diisi</span>
+              <span class="step-checkbox"><i class="fa-solid fa-check text-[7px] text-black"></i></span>
+              <span>Nama lengkap sudah diisi</span>
             </div>
             <div class="step-item" id="step-phone">
-              <span class="step-checkbox">✓</span>
+              <span class="step-checkbox"><i class="fa-solid fa-check text-[7px] text-black"></i></span>
               <span>Nomor WhatsApp valid</span>
             </div>
+            <!-- Dynamic step address if delivery is active -->
+            <div class="step-item hidden" id="step-address">
+              <span class="step-checkbox"><i class="fa-solid fa-check text-[7px] text-black"></i></span>
+              <span>Alamat pengiriman lengkap sudah diisi</span>
+            </div>
             <div class="step-item" id="step-proof">
-              <span class="step-checkbox">✓</span>
+              <span class="step-checkbox"><i class="fa-solid fa-check text-[7px] text-black"></i></span>
               <span>Bukti transfer QRIS sudah diunggah</span>
             </div>
           </div>
 
           <!-- Submit Button -->
-          <button id="btn-submit" class="btn-submit" disabled>
+          <button id="btn-submit" class="w-full flex items-center justify-center gap-2 py-3 px-4 bg-zinc-800 text-zinc-500 rounded-xl font-bold text-sm border border-white/5 transition-all duration-300 cursor-not-allowed shadow-lg" disabled>
             Konfirmasi & Kirim ke WhatsApp
           </button>
         </div>
@@ -865,9 +638,21 @@
     </footer>
   </div>
 
+  <!-- Toast Notification Melayang untuk Copy Clipboard -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 bg-[#1c1917] border border-[#d97706]/30 text-white text-xs font-semibold py-3 px-4 rounded-xl shadow-2xl transition-all duration-300 opacity-0 translate-y-3 pointer-events-none flex items-center gap-2">
+    <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+    <span id="toast-message">Nominal tersalin!</span>
+  </div>
+
   <script>
-    // 1. Data Menu Kopi
-    // 1. Data Menu Kopi Lengkap
+    // ==========================================
+    // 1. KONFIGURASI NOMOR WHATSAPP ADMIN KEDAI
+    // ==========================================
+    const ADMIN_WHATSAPP = "6282319692292";
+
+    // ==========================================
+    // 2. DATA DATABASE PRODUK LENGKAP KEDAI KOPI
+    // ==========================================
     const MENU_DATABASE = [
       // Coffee Classics
       { id: 'c1', category: 'coffee', name: 'Espresso', price: 13000, desc: 'Rich and concentrated shot of espresso brewed from local beans.' },
@@ -908,33 +693,63 @@
       { id: 'n9', category: 'non-coffee', name: 'Lemon Natural', price: 10000, desc: 'Pure, refreshing freshly squeezed lemon juice.' }
     ];
 
-    // 2. State Keranjang
+    // ==========================================
+    // 3. INTERNAL STATE & VARIABEL GLOBAL
+    // ==========================================
     let cart = [];
     let paymentFileUploaded = false;
     let paymentFileName = "";
     let activeCategory = 'coffee';
 
-    // 3. Elements Selector
+    // ==========================================
+    // 4. ELEMENT SELECTOR DOM
+    // ==========================================
     const menuContainer = document.getElementById('menu-container');
     const cartItemsList = document.getElementById('cart-items-list');
     const cartEmptyMsg = document.getElementById('cart-empty-msg');
+    const cartSubtotalDisplay = document.getElementById('cart-subtotal');
     const cartTotalDisplay = document.getElementById('cart-total');
+    const headerCartBadge = document.getElementById('header-cart-badge');
+    
+    // Form Inputs
     const inputCustName = document.getElementById('cust-name');
     const inputCustPhone = document.getElementById('cust-phone');
+    const inputCustAddress = document.getElementById('cust-address');
+    const hiddenOrderMethod = document.getElementById('order-method');
+    const addressContainer = document.getElementById('address-container');
+    const deliveryFeeRow = document.getElementById('delivery-fee-row');
+    
+    // Toggles
+    const btnMethodTakeaway = document.getElementById('btn-method-takeaway');
+    const btnMethodDelivery = document.getElementById('btn-method-delivery');
+    const methodSlider = document.getElementById('method-slider');
+
+    // QRIS & Upload File
+    const paymentAmountEl = document.getElementById('payment-amount');
+    const btnCopyAmount = document.getElementById('btn-copy-amount');
+    const copyText = document.getElementById('copy-text');
     const fileInput = document.getElementById('qris-file');
     const uploadZone = document.getElementById('upload-zone');
     const uploadPreview = document.getElementById('upload-preview');
+    const previewThumbnail = document.getElementById('preview-thumbnail');
     const fileNameDisplay = document.getElementById('file-name-display');
     const btnRemoveFile = document.getElementById('btn-remove-file');
-    const btnSubmit = document.getElementById('btn-submit');
 
-    // Steps checklists
+    // Steps Checklist & Submit
     const stepCart = document.getElementById('step-cart');
     const stepName = document.getElementById('step-name');
     const stepPhone = document.getElementById('step-phone');
+    const stepAddress = document.getElementById('step-address');
     const stepProof = document.getElementById('step-proof');
+    const btnSubmit = document.getElementById('btn-submit');
 
-    // 4. Render Menu Kopi (Filtered by Category)
+    // Toast
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+
+    // ==========================================
+    // 5. RENDER MENU KATALOG (UI/UX Asli)
+    // ==========================================
     function renderMenu() {
       const filtered = MENU_DATABASE.filter(item => item.category === activeCategory);
       menuContainer.innerHTML = filtered.map(item => `
@@ -951,8 +766,8 @@
           </div>
           <div class="menu-options">
             <select class="menu-select" id="opt-variant-${item.id}">
-              <option value="Ice">Dingin (Ice)</option>
-              <option value="Hot">Panas (Hot)</option>
+              <option value="Ice">Dingin (Ice) 🧊</option>
+              <option value="Hot">Panas (Hot) ☕</option>
             </select>
             <select class="menu-select" id="opt-sugar-${item.id}">
               <option value="Normal Sugar">Normal Sugar</option>
@@ -961,7 +776,7 @@
             </select>
           </div>
           <button class="btn-add" onclick="addToCart('${item.id}')">
-            <span>+</span> Tambah ke Keranjang
+            <i class="fa-solid fa-plus text-xs"></i> Tambah ke Keranjang
           </button>
         </div>
       `).join('');
@@ -980,12 +795,26 @@
       renderMenu();
     };
 
-    // Format Rupiah
+    // Helper Format Rupiah
     function formatRupiah(number) {
       return 'Rp ' + number.toLocaleString('id-ID');
     }
 
-    // 5. Tambah ke Keranjang
+    // Show Melayang Toast Notification
+    function showToast(message) {
+      toastMessage.textContent = message;
+      toast.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      
+      setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+      }, 2500);
+    }
+
+    // ==========================================
+    // 6. LOGIKA KERANJANG BELANJA (ADVANCED CART)
+    // ==========================================
     window.addToCart = function(menuId) {
       const menuItem = MENU_DATABASE.find(item => item.id === menuId);
       if (!menuItem) return;
@@ -997,7 +826,7 @@
       
       const customNote = `${variant}, ${sugar}`;
 
-      // Check if item with exact same configurations exists
+      // Periksa kecocokan menu + kustomisasi yang persis sama
       const existingItem = cart.find(item => item.id === menuId && item.notes === customNote);
 
       if (existingItem) {
@@ -1014,12 +843,25 @@
 
       renderCart();
       validateForm();
+      showToast(`${menuItem.name} (${customNote}) dimasukkan ke keranjang`);
     };
 
-    // 6. Render Keranjang
+    // Render Keranjang
     function renderCart() {
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+
+      // Render Badge di Sticky Header
+      if (totalQty > 0) {
+        headerCartBadge.textContent = totalQty;
+        headerCartBadge.classList.remove('scale-0');
+        headerCartBadge.classList.add('scale-100');
+      } else {
+        headerCartBadge.classList.remove('scale-100');
+        headerCartBadge.classList.add('scale-0');
+      }
+
       if (cart.length === 0) {
-        cartEmptyMsg.style.display = 'block';
+        cartEmptyMsg.style.display = 'flex';
         cartItemsList.style.display = 'none';
       } else {
         cartEmptyMsg.style.display = 'none';
@@ -1029,25 +871,31 @@
           <div class="cart-item">
             <div class="cart-item-details">
               <div class="cart-item-title">${item.name}</div>
-              <div class="cart-item-meta">Catatan: ${item.notes}</div>
+              <div class="cart-item-meta"><i class="fa-solid fa-sliders text-[10px] text-zinc-500 mr-0.5"></i> ${item.notes}</div>
               <div class="cart-item-price">${formatRupiah(item.price * item.qty)}</div>
             </div>
             <div class="cart-item-actions">
-              <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+              <button class="qty-btn" onclick="updateQty(${index}, -1)" type="button">-</button>
               <span class="qty-val">${item.qty}</span>
-              <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
-              <button class="btn-remove" onclick="removeItem(${index})" title="Hapus item">×</button>
+              <button class="qty-btn" onclick="updateQty(${index}, 1)" type="button">+</button>
+              <button class="btn-remove" onclick="removeItem(${index})" title="Hapus item" type="button">
+                <i class="fa-solid fa-xmark text-sm"></i>
+              </button>
             </div>
           </div>
         `).join('');
       }
 
-      // Hitung Total
-      const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-      cartTotalDisplay.textContent = formatRupiah(total);
+      // Hitung Total Rincian Biaya
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      cartSubtotalDisplay.textContent = formatRupiah(subtotal);
+      
+      // Update Total
+      cartTotalDisplay.textContent = formatRupiah(subtotal);
+      paymentAmountEl.textContent = formatRupiah(subtotal);
     }
 
-    // Update Quantity
+    // Ubah Kuantitas
     window.updateQty = function(index, delta) {
       cart[index].qty += delta;
       if (cart[index].qty <= 0) {
@@ -1057,59 +905,164 @@
       validateForm();
     };
 
-    // Remove Item
+    // Hapus Baris Item
     window.removeItem = function(index) {
       cart.splice(index, 1);
       renderCart();
       validateForm();
     };
 
-    // 7. Event Handler Input File (Upload Bukti)
+    // ==========================================
+    // 7. TOGGLE PENGAMBILAN & ANIMASI ALAMAT
+    // ==========================================
+    function setOrderMethod(method) {
+      hiddenOrderMethod.value = method;
+      
+      if (method === 'Delivery') {
+        // Pindah sliding background ke kanan
+        methodSlider.style.left = 'calc(50% + 2px)';
+        btnMethodDelivery.classList.replace('text-zinc-500', 'text-white');
+        btnMethodTakeaway.classList.replace('text-white', 'text-zinc-500');
+
+        // Munculkan kolom alamat dengan animasi halus
+        addressContainer.style.maxHeight = '180px';
+        addressContainer.style.opacity = '1';
+        addressContainer.style.marginTop = '0.5rem';
+
+        // Tampilkan baris Free Delivery & checklist alamat
+        deliveryFeeRow.classList.remove('hidden');
+        document.getElementById('step-address').classList.remove('hidden');
+      } else {
+        // Pindah sliding background ke kiri
+        methodSlider.style.left = '4px';
+        btnMethodTakeaway.classList.replace('text-zinc-500', 'text-white');
+        btnMethodDelivery.classList.replace('text-white', 'text-zinc-500');
+
+        // Sembunyikan kolom alamat dengan animasi halus
+        addressContainer.style.maxHeight = '0';
+        addressContainer.style.opacity = '0';
+        addressContainer.style.marginTop = '0';
+
+        // Sembunyikan baris Free Delivery & checklist alamat
+        deliveryFeeRow.classList.add('hidden');
+        document.getElementById('step-address').classList.add('hidden');
+      }
+      validateForm();
+    }
+
+    btnMethodTakeaway.addEventListener('click', () => setOrderMethod('Takeaway'));
+    btnMethodDelivery.addEventListener('click', () => setOrderMethod('Delivery'));
+
+    // ==========================================
+    // 8. SALIN NOMINAL DENGAN CLIPBOARD API
+    // ==========================================
+    btnCopyAmount.addEventListener('click', function() {
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      if (subtotal === 0) {
+        showToast("Tambahkan menu ke keranjang terlebih dahulu!");
+        return;
+      }
+
+      navigator.clipboard.writeText(subtotal.toString()).then(() => {
+        // Ubah tampilan tombol sesaat
+        copyText.textContent = "Tersalin!";
+        const copyIcon = btnCopyAmount.querySelector('i');
+        copyIcon.className = "fa-solid fa-check";
+        
+        showToast(`Nominal Rp ${subtotal.toLocaleString('id-ID')} disalin ke clipboard`);
+        
+        setTimeout(() => {
+          copyText.textContent = "Salin";
+          copyIcon.className = "fa-regular fa-copy";
+        }, 2000);
+      }).catch(err => {
+        showToast("Gagal menyalin nominal");
+      });
+    });
+
+    // ==========================================
+    // 9. WIDGET FILE UPLOAD DENGAN LIVE PREVIEW
+    // ==========================================
     fileInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
         paymentFileUploaded = true;
         paymentFileName = file.name;
         fileNameDisplay.textContent = file.name;
-        uploadZone.style.display = 'none';
-        uploadPreview.style.display = 'flex';
+
+        // Buat URL preview untuk file gambar
+        const objectUrl = URL.createObjectURL(file);
+        previewThumbnail.src = objectUrl;
+
+        // Sembunyikan area upload default dan tampilkan preview
+        uploadZone.classList.add('hidden');
+        uploadPreview.classList.remove('hidden');
+        uploadPreview.classList.add('flex');
       }
       validateForm();
     });
 
-    // Remove Uploaded File
-    btnRemoveFile.addEventListener('click', function() {
+    // Hapus/Ganti File Bukti Transfer
+    btnRemoveFile.addEventListener('click', function(e) {
+      e.preventDefault();
       fileInput.value = '';
       paymentFileUploaded = false;
       paymentFileName = '';
-      uploadZone.style.display = 'block';
-      uploadPreview.style.display = 'none';
+      
+      // Revoke preview URL agar hemat memori
+      if (previewThumbnail.src.startsWith('blob:')) {
+        URL.revokeObjectURL(previewThumbnail.src);
+      }
+      previewThumbnail.src = '';
+
+      // Munculkan kembali area upload default
+      uploadZone.classList.remove('hidden');
+      uploadPreview.classList.add('hidden');
+      uploadPreview.classList.remove('flex');
+      
       validateForm();
     });
 
-    // 8. Validasi Kelayakan Checkout
+    // ==========================================
+    // 10. VALIDASI FORM & CHECKLIST DENGAN KETAT
+    // ==========================================
     function validateForm() {
       const nameVal = inputCustName.value.trim();
       const phoneVal = inputCustPhone.value.trim();
-      
+      const addressVal = inputCustAddress.value.trim();
+      const method = hiddenOrderMethod.value;
+
       const isCartValid = cart.length > 0;
-      const isNameValid = nameVal.length >= 2;
+      const isNameValid = nameVal.length >= 3;
       const isPhoneValid = phoneVal.length >= 8 && /^\+?[0-9\s-]{8,15}$/.test(phoneVal);
       const isProofValid = paymentFileUploaded;
+      
+      let isAddressValid = true;
+      if (method === 'Delivery') {
+        isAddressValid = addressVal.length >= 10;
+      }
 
-      // Update checklists UI
+      // Update UI Kelayakan Checklist
       updateChecklistItem(stepCart, isCartValid);
       updateChecklistItem(stepName, isNameValid);
       updateChecklistItem(stepPhone, isPhoneValid);
       updateChecklistItem(stepProof, isProofValid);
+      
+      if (method === 'Delivery') {
+        updateChecklistItem(stepAddress, isAddressValid);
+      }
 
-      // Toggle submit button
-      if (isCartValid && isNameValid && isPhoneValid && isProofValid) {
-        btnSubmit.classList.add('active');
+      // Evaluasi apakah seluruh kondisi terpenuhi
+      const isFormValid = isCartValid && isNameValid && isPhoneValid && isProofValid && isAddressValid;
+
+      if (isFormValid) {
         btnSubmit.disabled = false;
+        // Ganti styling tombol submit menjadi aktif/premium
+        btnSubmit.className = "w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-[#d97706] to-amber-500 hover:from-[#b45309] hover:to-[#d97706] text-black rounded-xl font-bold text-sm border border-transparent transition-all duration-300 cursor-pointer shadow-lg shadow-amber-500/10 active:scale-[0.98]";
       } else {
-        btnSubmit.classList.remove('active');
         btnSubmit.disabled = true;
+        // Kembalikan ke styling mati/terkunci
+        btnSubmit.className = "w-full flex items-center justify-center gap-2 py-3 px-4 bg-zinc-800 text-zinc-500 rounded-xl font-bold text-sm border border-white/5 transition-all duration-300 cursor-not-allowed shadow-lg";
       }
     }
 
@@ -1121,50 +1074,94 @@
       }
     }
 
-    // Bind validation events
+    // Event Listener Validasi
     inputCustName.addEventListener('input', validateForm);
     inputCustPhone.addEventListener('input', validateForm);
+    inputCustAddress.addEventListener('input', validateForm);
 
-    // 9. Submit Order & Format ke WhatsApp Link
+    // ==========================================
+    // 11. GENERATOR LINK WHATSAPP DENGAN LOADING STATE
+    // ==========================================
     btnSubmit.addEventListener('click', function() {
       if (btnSubmit.disabled) return;
 
       const nameVal = inputCustName.value.trim();
       const phoneVal = inputCustPhone.value.trim();
-      const methodVal = document.querySelector('input[name="order-method"]:checked').value;
+      const addressVal = inputCustAddress.value.trim();
+      const methodVal = hiddenOrderMethod.value;
+      
       const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      
+      // Ambil Tanggal & Jam Pemesanan saat ini
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
+      const dateString = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
-      // Build text detail pesanan
-      const itemDetailsText = cart.map(item => `- ${item.qty}x ${item.name} (Catatan: ${item.notes})`).join('\n');
+      // Efek Loading Spinner Profesional Selama 1,2 Detik
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Menghubungkan ke WhatsApp...`;
 
-      // Compose the exact text requested
-      const messageText = 
+      setTimeout(() => {
+        // Buat susunan rincian kopi berformat pohon percabangan (tree branching)
+        let itemDetailsText = '';
+        cart.forEach((item, index) => {
+          const isLast = index === cart.length - 1;
+          const branchChar = isLast ? '└── ' : '├── ';
+          const subBranchChar = isLast ? '    ' : '│   ';
+          itemDetailsText += `${branchChar}${item.qty}x *${item.name}*\n`;
+          itemDetailsText += `${subBranchChar}└── _kustom:_ ${item.notes}\n`;
+        });
+
+        // Susun teks pesan WhatsApp sesuai spesifikasi
+        const messageText = 
 `*PESANAN BARU - FILO COFFEE* ☕
 ----------------------------------
-👤 *Detail Pelanggan:*
-- Nama: ${nameVal}
-- No. WA: ${phoneVal}
-- Metode: ${methodVal}
 
-🛒 *Detail Pesanan:*
+👤 *DETAIL PELANGGAN*
+├── Nama: *${nameVal}*
+├── No. WA: *${phoneVal}*
+└── Metode: *${methodVal}*
+${methodVal === 'Delivery' ? `
+📍 *ALAMAT PENGIRIMAN*
+└── *${addressVal}*
+` : ''}
+⏰ *WAKTU PEMESANAN*
+├── Tanggal: _${dateString}_
+└── Jam: _${timeString}_
+
+🛒 *DETAIL PESANAN*
 ${itemDetailsText}
+💰 *RINCIAN BIAYA*
+├── Subtotal: Rp ${subtotalAmount().toLocaleString('id-ID')}
+├── Ongkos Kirim: ${methodVal === 'Delivery' ? 'FREE DELIVERY' : 'Rp 0'}
+└── *Total Bayar:* *Rp ${total.toLocaleString('id-ID')}*
 
-💰 *Total Pembayaran:* ${formatRupiah(total)}
+📄 *DOKUMEN BUKTI TRANSFER*
+└── Nama File: _${paymentFileName}_
+
 ----------------------------------
-*PENTING:* Mohon lampirkan/kirim screenshot bukti transfer QRIS Anda di chat ini sebagai konfirmasi akhir.`;
+_Catatan: Harap lampirkan foto/screenshot bukti transfer di atas setelah pesan ini terkirim di chat WhatsApp ini sebagai konfirmasi akhir._`;
 
-      // Target Admin WhatsApp number
-      const adminWhatsApp = "6282319692292";
+        // Reset state tombol submit
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = `Konfirmasi & Kirim ke WhatsApp`;
+        validateForm();
 
-      // Alert/notification guiding the customer
-      alert("Detail pesanan Anda telah disiapkan!\n\nDi halaman WhatsApp nanti, mohon kirimkan pesan chat ini beserta screenshot bukti transfer QRIS Anda secara manual.");
-
-      // Redirect to WhatsApp Link
-      const waUrl = `https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(messageText)}`;
-      window.open(waUrl, '_blank');
+        // Redirect ke API WhatsApp
+        const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(messageText)}`;
+        window.open(waUrl, '_blank');
+        
+      }, 1200);
     });
 
-    // 10. Initial Run
+    // Helper hitung subtotal mandiri
+    function subtotalAmount() {
+      return cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    }
+
+    // ==========================================
+    // 12. RUNNING PERTAMA KALI (INITIALIZATION)
+    // ==========================================
     renderMenu();
     renderCart();
     validateForm();
